@@ -1,0 +1,201 @@
+/**
+ * theme.css — dark, Figma-style reskin of the editor chrome.
+ *
+ * Approach: override GrapesJS's own CSS custom properties (documented at
+ * https://grapesjs.com/docs/getting-started.html) rather than fighting
+ * individual selectors with !important. Verified property list against the
+ * bundled grapes.min.css — see CLAUDE.md.
+ */
+
+/* ---- UI chrome font (Inter, bundled locally — reusing the canvas font files) ---- */
+@font-face {
+  font-family: 'Inter UI';
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  src: url(./assets/fonts/canvas/inter/inter-latin-500-normal.woff2) format('woff2');
+}
+
+:root {
+  /* Backgrounds: near-black, Figma-style layering */
+  --gjs-main-color: #1e1e1e;
+  --gjs-primary-color: #181818;
+  --gjs-secondary-color: #2a2a2a;
+
+  /* Accent: blue instead of the default purple/pink */
+  --gjs-tertiary-color: #2f8ff0;
+  --gjs-quaternary-color: #55a3f5;
+  --gjs-color-highlight: #2f8ff0;
+
+  /* Text */
+  --gjs-font-color: #b6b6b6;
+  --gjs-font-color-active: #f5f5f5;
+
+  /* Borders / shadows */
+  --gjs-light-border: rgba(255, 255, 255, 0.08);
+  --gjs-arrow-color: rgba(255, 255, 255, 0.55);
+  --gjs-main-dark-color: rgba(0, 0, 0, 0.35);
+  --gjs-secondary-dark-color: rgba(0, 0, 0, 0.2);
+  --gjs-main-light-color: rgba(255, 255, 255, 0.06);
+  --gjs-secondary-light-color: rgba(255, 255, 255, 0.65);
+
+  /* Typography: bigger + more legible than the GrapesJS default 0.75rem */
+  --gjs-main-font: 'Inter UI', -apple-system, "Segoe UI", sans-serif;
+  --gjs-font-size: 0.825rem;
+
+  --gjs-left-width: 280px;
+  --gjs-animation-duration: 0.15s;
+}
+
+html, body {
+  background: var(--gjs-primary-color);
+}
+
+/* ---- Our custom toolbar (Open / Save Draft / Export / Brand Kit) ---- */
+#toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--gjs-primary-color);
+  border-bottom: 1px solid var(--gjs-light-border);
+  font-family: var(--gjs-main-font);
+}
+
+#toolbar button {
+  font-family: var(--gjs-main-font);
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--gjs-font-color-active);
+  background: var(--gjs-secondary-color);
+  border: 1px solid var(--gjs-light-border);
+  border-radius: 6px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: background var(--gjs-animation-duration), border-color var(--gjs-animation-duration);
+}
+
+#toolbar button:hover:not(:disabled) {
+  background: #333333;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+#toolbar button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+#toolbar button.primary {
+  background: var(--gjs-tertiary-color);
+  border-color: var(--gjs-tertiary-color);
+}
+
+#toolbar button.primary:hover:not(:disabled) {
+  background: var(--gjs-quaternary-color);
+}
+
+#status {
+  font-family: var(--gjs-main-font);
+  font-size: 0.8rem;
+  color: var(--gjs-secondary-light-color);
+  margin-left: 4px;
+}
+
+/* ---- Brand Kit panel ---- */
+#brand-kit-panel {
+  position: fixed;
+  top: 56px;
+  right: 16px;
+  width: 300px;
+  background: var(--gjs-secondary-color);
+  border: 1px solid var(--gjs-light-border);
+  border-radius: 10px;
+  padding: 16px;
+  font-family: var(--gjs-main-font);
+  color: var(--gjs-font-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  display: none;
+}
+
+#brand-kit-panel.open {
+  display: block;
+}
+
+#brand-kit-panel h3 {
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gjs-font-color-active);
+}
+
+.bk-field {
+  margin-bottom: 12px;
+}
+
+.bk-field label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--gjs-secondary-light-color);
+  margin-bottom: 5px;
+}
+
+.bk-field select,
+.bk-field input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--gjs-main-font);
+  font-size: 0.8rem;
+  background: var(--gjs-primary-color);
+  color: var(--gjs-font-color-active);
+  border: 1px solid var(--gjs-light-border);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.bk-field input[type="color"] {
+  width: 100%;
+  height: 32px;
+  border: 1px solid var(--gjs-light-border);
+  border-radius: 6px;
+  background: var(--gjs-primary-color);
+  padding: 2px;
+  cursor: pointer;
+}
+
+.bk-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.bk-actions button {
+  flex: 1;
+  font-family: var(--gjs-main-font);
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  border: 1px solid var(--gjs-light-border);
+}
+
+#bk-apply {
+  background: var(--gjs-tertiary-color);
+  border-color: var(--gjs-tertiary-color);
+  color: #fff;
+}
+
+#bk-apply:hover {
+  background: var(--gjs-quaternary-color);
+}
+
+#bk-close {
+  background: transparent;
+  color: var(--gjs-font-color);
+}
+
+#bk-close:hover {
+  background: var(--gjs-main-light-color);
+}

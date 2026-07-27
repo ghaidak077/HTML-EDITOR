@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Visual HTML Editor</title>
+  <link rel="stylesheet" href="assets/grapesjs/grapes.min.css" />
+  <link rel="stylesheet" href="theme.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    #gjs {
+      height: calc(100vh - 57px);
+    }
+  </style>
+</head>
+<body>
+  <div id="toolbar">
+    <button id="btn-open">Open</button>
+    <button id="btn-save">Save Draft</button>
+    <button id="btn-export" class="primary">Export</button>
+    <button id="btn-brand-kit">Brand Kit</button>
+    <button id="btn-save-component" disabled title="Select an element on the canvas first">Save as Component</button>
+    <span id="status"></span>
+  </div>
+
+  <div id="brand-kit-panel">
+    <h3>Brand Kit</h3>
+    <div class="bk-field">
+      <label for="bk-heading-font">Heading font</label>
+      <select id="bk-heading-font"></select>
+    </div>
+    <div class="bk-field">
+      <label for="bk-body-font">Body font</label>
+      <select id="bk-body-font"></select>
+    </div>
+    <div class="bk-field">
+      <label for="bk-primary-color">Primary color</label>
+      <input type="color" id="bk-primary-color" value="#2f8ff0" />
+    </div>
+    <div class="bk-field">
+      <label for="bk-secondary-color">Secondary color</label>
+      <input type="color" id="bk-secondary-color" value="#6b6b6b" />
+    </div>
+    <div class="bk-field">
+      <label for="bk-text-color">Text color</label>
+      <input type="color" id="bk-text-color" value="#1a1a1a" />
+    </div>
+    <div class="bk-field">
+      <label for="bk-bg-color">Background color</label>
+      <input type="color" id="bk-bg-color" value="#ffffff" />
+    </div>
+    <div class="bk-actions">
+      <button id="bk-apply">Apply</button>
+      <button id="bk-close">Close</button>
+    </div>
+  </div>
+
+  <div id="gjs"></div>
+
+  <script src="assets/grapesjs/grapes.min.js"></script>
+  <script src="assets/grapesjs/grapesjs-preset-webpage.min.js"></script>
+  <script src="assets/grapesjs/grapesjs-custom-code.min.js"></script>
+  <script src="fonts.js"></script>
+  <script src="blocks.js"></script>
+  <script src="brand-kit.js"></script>
+  <script src="editor.js"></script>
+</body>
+</html>
